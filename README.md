@@ -11,17 +11,19 @@ A merchant publishes a plan (token, amount, period). A subscriber approves the c
 | Item | Value |
 |---|---|
 | Network | Stellar Testnet |
-| Contract ID | [`CCVC2FX7Q3IFIGNXLLLSRGXWV7JKCNYLMXWKQIXVNIZTSGU7QFVJSHIK`](https://lab.stellar.org/r/testnet/contract/CCVC2FX7Q3IFIGNXLLLSRGXWV7JKCNYLMXWKQIXVNIZTSGU7QFVJSHIK) |
-| WASM sha256 | `ad78763d6a0fd8aa777f1496ba1a2f0b6ce7625d26511304ed58d083880c3ed2` |
-| WASM size | 9,559 bytes |
-| Deploy | [`20ee590714…`](https://stellar.expert/explorer/testnet/tx/20ee590714256507ce68e67f639cb90aff3b442b0edd7eac6b3a659bcb8d7fed) |
-| `approve` | [`52bbb169f9…`](https://stellar.expert/explorer/testnet/tx/52bbb169f9641c4875267306ceed2d2befbb4884e2bdb9b9acf3a739860bbf4c) |
-| `create_plan` | [`289e13ca74…`](https://stellar.expert/explorer/testnet/tx/289e13ca741e4c76e7cbd17e94240ea144cb88ae20eb960c39623659d250b981) |
-| `subscribe` (1 XLM paid) | [`9496e518c9…`](https://stellar.expert/explorer/testnet/tx/9496e518c9484b81dacdfce1dc795cf132e8ff36f6dfb7e1b9193cac5e0497fe) |
-| `charge` (2nd period, 1 XLM paid) | [`7b729bac56…`](https://stellar.expert/explorer/testnet/tx/7b729bac567b965018c3f36593d1f4b7574ffc2d68b8ba9a8f1b0cae116b0a35) |
+| Contract ID | [`CAEBLJLKCAMVZ6SWCYYZID4HHJJTUZZ4PP4OC4UDPRP6XEH22NCOMQLR`](https://lab.stellar.org/r/testnet/contract/CAEBLJLKCAMVZ6SWCYYZID4HHJJTUZZ4PP4OC4UDPRP6XEH22NCOMQLR) |
+| WASM sha256 | `8669f9584646e871829cdb3ae96af89ec27a73e84319b868c1526faaa63feaa0` |
+| WASM source | [GitHub Release v0.1.0](https://github.com/Alimzy/stellar-subscriptions/releases/tag/v0.1.0) (`SHA256SUMS`), built by CI and deployed unchanged |
+| WASM size | 9,559 bytes (cap 65,536) |
+| WASM upload | [`810a463fda…`](https://stellar.expert/explorer/testnet/tx/810a463fdac7cca703839ef1753285502f182960e91de983a679ed7e296c8cb6) |
+| Deploy | [`10e18a52f7…`](https://stellar.expert/explorer/testnet/tx/10e18a52f753dabf73d57ba2cc56cc565f999448a0f016e2fc38bb82bf8d8616) |
+| `approve` | [`e2af70e446…`](https://stellar.expert/explorer/testnet/tx/e2af70e446928822fd8880474da16e2e30a9ade3f2943d7293c55ecf26c45a2a) |
+| `create_plan` | [`3094642d4a…`](https://stellar.expert/explorer/testnet/tx/3094642d4a1f6861ecedefe8179185a3a6ebf6a71ea69ef3a24806a2091eb2ab) |
+| `subscribe` (1 XLM paid) | [`8308aaaf27…`](https://stellar.expert/explorer/testnet/tx/8308aaaf272f5ecbca1a3c2888e9326ecc877a5ec1aa22899e8515b0bd4cb5eb) |
+| `charge` (2nd period, 1 XLM paid) | [`fcb379629a…`](https://stellar.expert/explorer/testnet/tx/fcb379629aadbd0cf16f0e4a5bbc6d7be2abb4554c63d37c36dafac2a8d9f483) |
 | CI | ![CI](https://github.com/Alimzy/stellar-subscriptions/actions/workflows/ci.yml/badge.svg) |
 
-Read back after the second charge: `charges: 2`, `cancelled: false`.
+The `charge` transaction emits a `Charged` event (charges = 2) and a token transfer from subscriber to merchant.
 
 ## Interface
 
