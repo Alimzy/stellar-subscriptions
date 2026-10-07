@@ -26,7 +26,7 @@ if [ "${DRY_RUN:-0}" = "1" ]; then EXP=1000000; else
   EXP=$(echo "$LEDGER" | python3 -c 'import sys,json;print(json.load(sys.stdin)["result"]["sequence"]+20000)'); fi
 
 run stellar contract invoke --id "$TOKEN" --source subscriber --network $NET -- \
-  approve --from "$SUBSCRIBER" --spender "$CONTRACT" --amount 100000000 --expiration_ledger "$EXP"
+  approve --from "$SUBSCRIBER" --spender "$CONTRACT" --amount 100000000 --live_until_ledger "$EXP"
 run stellar contract invoke --id "$CONTRACT" --source merchant --network $NET -- \
   create_plan --merchant "$MERCHANT" --token "$TOKEN" --amount 10000000 --period 60
 run stellar contract invoke --id "$CONTRACT" --source subscriber --network $NET -- \

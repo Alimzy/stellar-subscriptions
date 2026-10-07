@@ -11,11 +11,17 @@ A merchant publishes a plan (token, amount, period). A subscriber approves the c
 | Item | Value |
 |---|---|
 | Network | Stellar Testnet |
-| Contract ID | _fill in after `scripts/demo-testnet.sh`_ |
-| WASM sha256 | _fill in (also attached to each GitHub Release)_ |
-| Deploy tx | _link_ |
-| First charge tx | _link_ |
+| Contract ID | [`CCVC2FX7Q3IFIGNXLLLSRGXWV7JKCNYLMXWKQIXVNIZTSGU7QFVJSHIK`](https://lab.stellar.org/r/testnet/contract/CCVC2FX7Q3IFIGNXLLLSRGXWV7JKCNYLMXWKQIXVNIZTSGU7QFVJSHIK) |
+| WASM sha256 | `ad78763d6a0fd8aa777f1496ba1a2f0b6ce7625d26511304ed58d083880c3ed2` |
+| WASM size | 9,559 bytes |
+| Deploy | [`20ee590714…`](https://stellar.expert/explorer/testnet/tx/20ee590714256507ce68e67f639cb90aff3b442b0edd7eac6b3a659bcb8d7fed) |
+| `approve` | [`52bbb169f9…`](https://stellar.expert/explorer/testnet/tx/52bbb169f9641c4875267306ceed2d2befbb4884e2bdb9b9acf3a739860bbf4c) |
+| `create_plan` | [`289e13ca74…`](https://stellar.expert/explorer/testnet/tx/289e13ca741e4c76e7cbd17e94240ea144cb88ae20eb960c39623659d250b981) |
+| `subscribe` (1 XLM paid) | [`9496e518c9…`](https://stellar.expert/explorer/testnet/tx/9496e518c9484b81dacdfce1dc795cf132e8ff36f6dfb7e1b9193cac5e0497fe) |
+| `charge` (2nd period, 1 XLM paid) | [`7b729bac56…`](https://stellar.expert/explorer/testnet/tx/7b729bac567b965018c3f36593d1f4b7574ffc2d68b8ba9a8f1b0cae116b0a35) |
 | CI | ![CI](https://github.com/Alimzy/stellar-subscriptions/actions/workflows/ci.yml/badge.svg) |
+
+Read back after the second charge: `charges: 2`, `cancelled: false`.
 
 ## Interface
 
