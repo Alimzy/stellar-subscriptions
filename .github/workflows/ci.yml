@@ -1,0 +1,77 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+permissions:
+  contents: read
+env:
+  CARGO_TERM_COLOR: always
+  MAX_WASM_BYTES: 65536
+jobs:
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { components: rustfmt }
+      - run: cargo fmt --all -- --check
+  clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { components: clippy, targets: wasm32v1-none }
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --workspace --all-targets --locked -- -D warnings
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --workspace --locked
+  build-wasm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { targets: wasm32v1-none }
+      - uses: Swatinem/rust-cache@v2
+      - name: Install stellar-cli
+        uses: actions/cache@v4
+        id: cli
+        with:
+          path: ~/.cargo/bin/stellar
+          key: stellar-cli-28.0.0
+      - if: steps.cli.outputs.cache-hit != 'true'
+        run: cargo install --locked stellar-cli --version 28.0.0
+      - run: stellar contract build --package subscriptions
+      - name: Enforce WASM size cap
+        run: |
+          SIZE=$(stat -c%s target/wasm32v1-none/release/subscriptions.wasm)
+          echo "wasm size: $SIZE bytes (cap $MAX_WASM_BYTES)"
+          test "$SIZE" -le "$MAX_WASM_BYTES"
+      - name: Checksum
+        run: sha256sum target/wasm32v1-none/release/subscriptions.wasm | tee wasm.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: subscriptions-wasm
+          path: |
+            target/wasm32v1-none/release/subscriptions.wasm
+            wasm.sha256
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps --locked
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: taiki-e/install-action@v2
+        with: { tool: "cargo-audit,cargo-deny" }
+      - run: cargo audit
+      - run: cargo deny check
