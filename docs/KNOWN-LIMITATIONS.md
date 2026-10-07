@@ -9,3 +9,4 @@
 - **No pause.** Subscribers can only cancel; merchants can only deactivate the whole plan.
 - **Per-ledger-time precision.** Timing uses ledger timestamps, not wall-clock guarantees.
 - **Non-standard tokens** (fee-on-transfer, rebasing) are untested.
+- **Unmaintained transitive dependency.** `cargo deny` ignores RUSTSEC-2024-0436 (`paste` is unmaintained, not vulnerable). It comes in through `soroban-sdk` and we cannot upgrade it ourselves. The ignore is in `deny.toml` with its reason, and should be removed once the SDK drops it.

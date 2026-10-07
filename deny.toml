@@ -1,6 +1,9 @@
 [advisories]
 version = 2
 yanked = "deny"
+ignore = [
+  { id = "RUSTSEC-2024-0436", reason = "paste is unmaintained (not a vulnerability); transitive via soroban-sdk (arkworks, wasmi); no safe upgrade exists. Revisit when soroban-sdk drops it." },
+]
 
 [licenses]
 version = 2
