@@ -2,11 +2,11 @@
 # End-to-end testnet demo. DRY_RUN=1 prints commands without running them.
 set -euo pipefail
 NET=testnet
-WASM=target/wasm32v1-none/release/subscriptions.wasm
+WASM="${WASM:-target/wasm32v1-none/release/subscriptions.wasm}"
 run() { echo "+ $*"; [ "${DRY_RUN:-0}" = "1" ] || "$@"; }
 cap() { echo "+ $*" >&2; if [ "${DRY_RUN:-0}" = "1" ]; then echo "DRY_RUN_VALUE"; else "$@"; fi; }
 
-run stellar contract build --package subscriptions
+[ -n "${SKIP_BUILD:-}" ] || run stellar contract build --package subscriptions
 run sha256sum "$WASM"
 
 for k in merchant subscriber; do
